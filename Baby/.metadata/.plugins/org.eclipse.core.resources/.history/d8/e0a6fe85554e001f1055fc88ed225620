@@ -1,0 +1,73 @@
+package com.app.services;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.app.dto.VaccineScheduleDTO;
+import com.app.entity.VaccineSchedule;
+import com.app.repository.VaccineScheduleRepository;
+
+@Service
+public class VaccineScheduleServiceImpl implements VaccineScheduleService {
+
+	private final VaccineScheduleRepository vaccineScheduleRepository;
+	private final ModelMapper modelMapper;
+
+	public VaccineScheduleServiceImpl(VaccineScheduleRepository vaccineScheduleRepository, ModelMapper modelMapper) {
+		this.vaccineScheduleRepository = vaccineScheduleRepository;
+		this.modelMapper = modelMapper;
+	}
+
+	@Override
+	public ResponseEntity<VaccineScheduleDTO> createVaccineSchedule(VaccineScheduleDTO vaccineScheduleDTO) {
+		try {
+			VaccineSchedule vaccineSchedule = modelMapper.map(vaccineScheduleDTO, VaccineSchedule.class);
+			vaccineSchedule = vaccineScheduleRepository.save(vaccineSchedule);
+			VaccineScheduleDTO savedDTO = modelMapper.map(vaccineSchedule, VaccineScheduleDTO.class);
+			return new ResponseEntity<>(savedDTO, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@Override
+	public ResponseEntity<VaccineScheduleDTO> getVaccineScheduleById(int id) {
+		return vaccineScheduleRepository.findById(id).map(vaccineSchedule -> {
+			VaccineScheduleDTO dto = modelMapper.map(vaccineSchedule, VaccineScheduleDTO.class);
+			return new ResponseEntity<>(dto, HttpStatus.OK);
+		}).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@Override
+	public ResponseEntity<List<VaccineScheduleDTO>> getAllVaccineSchedules() {
+		List<VaccineScheduleDTO> dtos = vaccineScheduleRepository.findAll().stream()
+				.map(vaccineSchedule -> modelMapper.map(vaccineSchedule, VaccineScheduleDTO.class))
+				.collect(Collectors.toList());
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<VaccineScheduleDTO> updateVaccineSchedule(int id, VaccineScheduleDTO vaccineScheduleDTO) {
+		return vaccineScheduleRepository.findById(id).map(existingSchedule -> {
+			modelMapper.map(vaccineScheduleDTO, existingSchedule);
+			VaccineSchedule updatedSchedule = vaccineScheduleRepository.save(existingSchedule);
+			VaccineScheduleDTO updatedDTO = modelMapper.map(updatedSchedule, VaccineScheduleDTO.class);
+			return new ResponseEntity<>(updatedDTO, HttpStatus.OK);
+		}).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@Override
+	public ResponseEntity<Void> deleteVaccineSchedule(int id) {
+		if (vaccineScheduleRepository.existsById(id)) {
+			vaccineScheduleRepository.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+}

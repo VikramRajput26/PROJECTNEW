@@ -1,0 +1,18 @@
+package com.app.services;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import com.app.dto.DoctorDTO;
+
+public interface DoctorService {
+    ResponseEntity<DoctorDTO> createDoctor(DoctorDTO doctorDTO);
+
+    ResponseEntity<DoctorDTO> getDoctorById(int id);
+
+    ResponseEntity<List<DoctorDTO>> getAllDoctors();
+
+    ResponseEntity<DoctorDTO> updateDoctor(int id, DoctorDTO doctorDTO);
+
+    ResponseEntity<Void> deleteDoctor(int id);
+}

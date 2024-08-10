@@ -1,0 +1,50 @@
+package com.app.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.app.dto.VaccineScheduleDTO;
+import com.app.services.VaccineScheduleService;
+
+@RestController
+@RequestMapping("/vaccine-schedules")
+public class VaccineScheduleController {
+
+    private final VaccineScheduleService vaccineScheduleService;
+
+    @Autowired
+    public VaccineScheduleController(VaccineScheduleService vaccineScheduleService) {
+        this.vaccineScheduleService = vaccineScheduleService;
+    }
+
+    @PostMapping
+    public ResponseEntity<VaccineScheduleDTO> createVaccineSchedule(
+            @RequestBody VaccineScheduleDTO vaccineScheduleDTO) {
+        return ResponseEntity.ok(vaccineScheduleService.createVaccineSchedule(vaccineScheduleDTO));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<VaccineScheduleDTO> getVaccineScheduleById(@PathVariable int id) {
+        return vaccineScheduleService.getVaccineScheduleById(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<VaccineScheduleDTO>> getAllVaccineSchedules() {
+        return vaccineScheduleService.getAllVaccineSchedules();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<VaccineScheduleDTO> updateVaccineSchedule(@PathVariable int id,
+            @RequestBody VaccineScheduleDTO vaccineScheduleDTO) {
+        return vaccineScheduleService.updateVaccineSchedule(id, vaccineScheduleDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteVaccineSchedule(@PathVariable int id) {
+        vaccineScheduleService.deleteVaccineSchedule(id);
+        return ResponseEntity.noContent().build();
+    }
+}

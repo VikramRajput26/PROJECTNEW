@@ -1,0 +1,18 @@
+package com.app.services;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import com.app.dto.AppointmentDTO;
+
+public interface AppointmentService {
+    ResponseEntity<AppointmentDTO> createAppointment(AppointmentDTO appointmentDTO);
+
+    ResponseEntity<AppointmentDTO> getAppointmentById(int id);
+
+    ResponseEntity<List<AppointmentDTO>> getAllAppointments();
+
+    ResponseEntity<AppointmentDTO> updateAppointment(int id, AppointmentDTO appointmentDTO);
+
+    ResponseEntity<Void> deleteAppointment(int id);
+}

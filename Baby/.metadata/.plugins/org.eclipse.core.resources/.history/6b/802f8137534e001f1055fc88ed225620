@@ -1,0 +1,9 @@
+package com.app.services;
+
+import com.app.entity.User;
+
+public interface UserService {
+    User findByEmail(String email);
+
+    void registerUser(User user);
+}
