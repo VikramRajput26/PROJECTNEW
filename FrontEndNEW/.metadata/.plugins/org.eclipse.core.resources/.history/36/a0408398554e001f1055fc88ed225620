@@ -1,0 +1,70 @@
+package com.app.services;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dto.AppointmentDTO;
+import com.app.entity.Appointment;
+import com.app.repository.AppointmentRepository;
+
+@Service
+@Transactional
+public class AppointmentServiceImpl implements AppointmentService {
+
+	private final AppointmentRepository appointmentRepository;
+	private final ModelMapper modelMapper;
+
+	public AppointmentServiceImpl(AppointmentRepository appointmentRepository, ModelMapper modelMapper) {
+		this.appointmentRepository = appointmentRepository;
+		this.modelMapper = modelMapper;
+	}
+
+	@Override
+	public ResponseEntity<AppointmentDTO> createAppointment(AppointmentDTO appointmentDTO) {
+		Appointment appointment = modelMapper.map(appointmentDTO, Appointment.class);
+		appointment = appointmentRepository.save(appointment);
+		AppointmentDTO responseDTO = modelMapper.map(appointment, AppointmentDTO.class);
+		return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+	}
+
+	@Override
+	public ResponseEntity<AppointmentDTO> getAppointmentById(int id) {
+		return appointmentRepository.findById(id).map(appointment -> {
+			AppointmentDTO responseDTO = modelMapper.map(appointment, AppointmentDTO.class);
+			return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+		}).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@Override
+	public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
+		List<AppointmentDTO> appointments = appointmentRepository.findAll().stream()
+				.map(appointment -> modelMapper.map(appointment, AppointmentDTO.class)).collect(Collectors.toList());
+		return new ResponseEntity<>(appointments, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<AppointmentDTO> updateAppointment(int id, AppointmentDTO appointmentDTO) {
+		return appointmentRepository.findById(id).map(existingAppointment -> {
+			modelMapper.map(appointmentDTO, existingAppointment);
+			Appointment updatedAppointment = appointmentRepository.save(existingAppointment);
+			AppointmentDTO responseDTO = modelMapper.map(updatedAppointment, AppointmentDTO.class);
+			return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+		}).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@Override
+	public ResponseEntity<Void> deleteAppointment(int id) {
+		if (appointmentRepository.existsById(id)) {
+			appointmentRepository.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+}

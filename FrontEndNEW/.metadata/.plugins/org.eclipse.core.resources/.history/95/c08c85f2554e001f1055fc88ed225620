@@ -1,0 +1,48 @@
+package com.app.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.app.dto.AppointmentDTO;
+import com.app.services.AppointmentService;
+
+@RestController
+@RequestMapping("/appointments")
+public class AppointmentController {
+
+    private final AppointmentService appointmentService;
+
+    @Autowired
+    public AppointmentController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
+    }
+
+    @PostMapping
+    public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
+        return appointmentService.createAppointment(appointmentDTO);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AppointmentDTO> getAppointmentById(@PathVariable int id) {
+        return appointmentService.getAppointmentById(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
+        return appointmentService.getAllAppointments();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AppointmentDTO> updateAppointment(@PathVariable int id,
+            @RequestBody AppointmentDTO appointmentDTO) {
+        return appointmentService.updateAppointment(id, appointmentDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAppointment(@PathVariable int id) {
+        return appointmentService.deleteAppointment(id);
+    }
+}

@@ -1,0 +1,75 @@
+/* Appointment.css */
+
+.appointment-form {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.appointment-form h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.appointment-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.appointment-form input,
+.appointment-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.appointment-form input:focus,
+.appointment-form select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.appointment-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.appointment-form button:hover {
+  background-color: #0056b3;
+}
+
+.appointment-form input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(50%);
+}
+
+.appointment-form input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(50%);
+}
+
+@media (max-width: 600px) {
+  .appointment-form {
+    padding: 15px;
+  }
+
+  .appointment-form button {
+    font-size: 16px;
+  }
+}

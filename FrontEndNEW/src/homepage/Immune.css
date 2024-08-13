@@ -1,0 +1,57 @@
+/* Container */
+.container {
+  font-family: Arial, sans-serif;
+}
+
+/* Main Heading */
+h2 {
+  color: #004085; /* Dark blue for main heading */
+  font-size: 1rem; /* Increased font size for main heading */
+  margin-bottom: 50px;
+  font-family: 'Georgia', serif; /* Changed font for main heading */
+}
+
+/* Subheadings */
+h4 {
+  color: #006400; /* Dark green for subheadings */
+  font-size: 2rem; /* Increased font size for subheadings */
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-family: 'Georgia', serif; /* Changed font for subheadings */
+}
+
+/* Table */
+.table {
+  font-size: 1.2rem; /* Increased font size for table */
+  border-collapse: collapse;
+  width: 100%;
+  font-family: 'Arial', sans-serif; /* Ensured table font remains Arial */
+}
+
+/* Table Headers */
+.table th {
+  background-color: #007bff; /* Blue background for table headers */
+  color: #ffffff; /* White text color for table headers */
+  padding: 12px;
+  text-align: left;
+  font-size: 1.2rem; /* Increased font size for table headers */
+}
+
+/* Table Cells */
+.table td {
+  background-color: #f8f9fa; /* Light gray background for table cells */
+  color: #333; /* Dark gray text color for table cells */
+  padding: 12px;
+  border-bottom: 1px solid #ddd; /* Light gray border for cells */
+  font-size: 1.2rem; /* Increased font size for table cells */
+}
+
+/* Striped Rows */
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #e9ecef; /* Light gray background for odd rows */
+}
+
+/* Hover Effect */
+.table-hover tbody tr:hover {
+  background-color: #d6e9f9; /* Light blue background on hover */
+}

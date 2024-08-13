@@ -1,0 +1,19 @@
+.about-us-container {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8); /* semi-transparent background */
+  margin: 50px auto; /* center alignment */
+  width: 80%;
+  max-width: 800px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.highlight {
+  font-weight: bold;
+  color: #28a745; /* green color */
+}
+
+.back-button {
+  display: block;
+  margin: 20px auto 0;
+  text-align: center;
+}

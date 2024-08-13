@@ -1,0 +1,19 @@
+package com.app.services;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+
+import com.app.dto.VaccineScheduleDTO;
+
+public interface VaccineScheduleService {
+    ResponseEntity<VaccineScheduleDTO> createVaccineSchedule(VaccineScheduleDTO vaccineScheduleDTO);
+
+    ResponseEntity<VaccineScheduleDTO> getVaccineScheduleById(int id);
+
+    ResponseEntity<List<VaccineScheduleDTO>> getAllVaccineSchedules();
+
+    ResponseEntity<VaccineScheduleDTO> updateVaccineSchedule(int id, VaccineScheduleDTO vaccineScheduleDTO);
+
+    ResponseEntity<Void> deleteVaccineSchedule(int id);
+}

@@ -1,0 +1,39 @@
+/* ViewUser.css */
+.view-user-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  padding: 20px; /* Optional padding */
+  box-sizing: border-box;
+}
+
+.view-user-details {
+  max-width: 600px; /* Optional: adjust based on your layout */
+  width: 100%;
+  background-color: #b5ecca; /* Optional: light background color */
+  padding: 20px; /* Optional: padding inside the container */
+  border-radius: 8px; /* Optional: rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+}
+
+.view-user-details h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.view-user-details p {
+  margin: 10px 0;
+  font-size: 1.25rem;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 10px; /* Space between buttons */
+  margin-top: 20px; /* Optional: space above the buttons */
+}
+
+.button-group .btn {
+  flex: none; /* Prevent buttons from stretching */
+}

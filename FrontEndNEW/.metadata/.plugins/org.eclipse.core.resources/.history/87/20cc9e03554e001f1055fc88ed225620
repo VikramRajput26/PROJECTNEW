@@ -1,0 +1,72 @@
+package com.app.services;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dto.ParentDTO;
+import com.app.entity.Parent;
+import com.app.repository.ParentRepository;
+
+@Service
+@Transactional
+public class ParentServiceImpl implements ParentService {
+@Autowired
+	private final ParentRepository parentRepository;
+@Autowired
+	private final ModelMapper modelMapper;
+
+	public ParentServiceImpl(ParentRepository parentRepository, ModelMapper modelMapper) {
+		this.parentRepository = parentRepository;
+		this.modelMapper = modelMapper;
+	}
+
+	@Override
+	public ResponseEntity<ParentDTO> createParent(ParentDTO parentDTO) {
+		Parent parent = modelMapper.map(parentDTO, Parent.class);
+		parent = parentRepository.save(parent);
+		ParentDTO responseDTO = modelMapper.map(parent, ParentDTO.class);
+		return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+	}
+
+	@Override
+	public ResponseEntity<ParentDTO> getParentById(int id) {
+		return parentRepository.findById(id).map(parent -> {
+			ParentDTO responseDTO = modelMapper.map(parent, ParentDTO.class);
+			return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+		}).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@Override
+	public ResponseEntity<List<ParentDTO>> getAllParents() {
+		List<ParentDTO> parents = parentRepository.findAll().stream()
+				.map(parent -> modelMapper.map(parent, ParentDTO.class)).collect(Collectors.toList());
+		return new ResponseEntity<>(parents, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<ParentDTO> updateParent(int id, ParentDTO parentDTO) {
+		return parentRepository.findById(id).map(existingParent -> {
+			modelMapper.map(parentDTO, existingParent);
+			Parent updatedParent = parentRepository.save(existingParent);
+			ParentDTO responseDTO = modelMapper.map(updatedParent, ParentDTO.class);
+			return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+		}).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@Override
+	public ResponseEntity<Void> deleteParent(int id) {
+		if (parentRepository.existsById(id)) {
+			parentRepository.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+}

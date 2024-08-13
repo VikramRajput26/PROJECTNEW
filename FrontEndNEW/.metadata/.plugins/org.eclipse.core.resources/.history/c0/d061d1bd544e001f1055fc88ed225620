@@ -1,0 +1,75 @@
+package com.app.services;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dto.DoctorDTO;
+import com.app.entity.Doctor;
+import com.app.repository.DoctorRepository;
+
+@Service
+@Transactional
+public class DoctorServiceImpl implements DoctorService {
+
+    private final DoctorRepository doctorRepository;
+    private final ModelMapper modelMapper;
+
+    public DoctorServiceImpl(DoctorRepository doctorRepository, ModelMapper modelMapper) {
+        this.doctorRepository = doctorRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    @Override
+    public ResponseEntity<DoctorDTO> createDoctor(DoctorDTO doctorDTO) {
+        Doctor doctor = modelMapper.map(doctorDTO, Doctor.class);
+        doctor = doctorRepository.save(doctor);
+        DoctorDTO responseDTO = modelMapper.map(doctor, DoctorDTO.class);
+        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<DoctorDTO> getDoctorById(int id) {
+        return doctorRepository.findById(id)
+                .map(doctor -> {
+                    DoctorDTO responseDTO = modelMapper.map(doctor, DoctorDTO.class);
+                    return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public ResponseEntity<List<DoctorDTO>> getAllDoctors() {
+        List<DoctorDTO> doctors = doctorRepository.findAll().stream()
+                .map(doctor -> modelMapper.map(doctor, DoctorDTO.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(doctors, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<DoctorDTO> updateDoctor(int id, DoctorDTO doctorDTO) {
+        return doctorRepository.findById(id)
+                .map(existingDoctor -> {
+                    modelMapper.map(doctorDTO, existingDoctor);
+                    Doctor updatedDoctor = doctorRepository.save(existingDoctor);
+                    DoctorDTO responseDTO = modelMapper.map(updatedDoctor, DoctorDTO.class);
+                    return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteDoctor(int id) {
+        if (doctorRepository.existsById(id)) {
+            doctorRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+}

@@ -1,0 +1,48 @@
+package com.app.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.app.dto.DoctorDTO;
+import com.app.services.DoctorService;
+
+@RestController
+@RequestMapping("/doctors")
+public class DoctorController {
+
+    private final DoctorService doctorService;
+
+    @Autowired
+    public DoctorController(DoctorService doctorService) {
+        this.doctorService = doctorService;
+    }
+
+    @PostMapping
+    public ResponseEntity<DoctorDTO> createDoctor(@RequestBody DoctorDTO doctorDTO) {
+        return ResponseEntity.ok(doctorService.createDoctor(doctorDTO));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DoctorDTO> getDoctorById(@PathVariable int id) {
+        return doctorService.getDoctorById(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<DoctorDTO>> getAllDoctors() {
+        return doctorService.getAllDoctors();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DoctorDTO> updateDoctor(@PathVariable int id, @RequestBody DoctorDTO doctorDTO) {
+        return doctorService.updateDoctor(id, doctorDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDoctor(@PathVariable int id) {
+        doctorService.deleteDoctor(id);
+        return ResponseEntity.noContent().build();
+    }
+}
