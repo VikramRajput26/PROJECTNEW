@@ -1,0 +1,74 @@
+package com.app.services;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.app.dto.VaccineDTO;
+import com.app.entity.Vaccine;
+import com.app.repository.VaccineRepository;
+
+@Service
+public class VaccineServiceImpl implements VaccineService {
+@Autowired
+	private final VaccineRepository vaccineRepository;
+@Autowired
+	private final ModelMapper modelMapper;
+
+	public VaccineServiceImpl(VaccineRepository vaccineRepository, ModelMapper modelMapper) {
+		this.vaccineRepository = vaccineRepository;
+		this.modelMapper = modelMapper;
+	}
+
+	@Override
+	public ResponseEntity<VaccineDTO> createVaccine(VaccineDTO vaccineDTO) {
+		try {
+			Vaccine vaccine = modelMapper.map(vaccineDTO, Vaccine.class);
+			vaccine = vaccineRepository.save(vaccine);
+			VaccineDTO savedDTO = modelMapper.map(vaccine, VaccineDTO.class);
+			return new ResponseEntity<>(savedDTO, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@Override
+	public ResponseEntity<VaccineDTO> getVaccineById(int id) {
+		return vaccineRepository.findById(id).map(vaccine -> {
+			VaccineDTO dto = modelMapper.map(vaccine, VaccineDTO.class);
+			return new ResponseEntity<>(dto, HttpStatus.OK);
+		}).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@Override
+	public ResponseEntity<List<VaccineDTO>> getAllVaccines() {
+		List<VaccineDTO> dtos = vaccineRepository.findAll().stream()
+				.map(vaccine -> modelMapper.map(vaccine, VaccineDTO.class)).collect(Collectors.toList());
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<VaccineDTO> updateVaccine(int id, VaccineDTO vaccineDTO) {
+		return vaccineRepository.findById(id).map(existingVaccine -> {
+			modelMapper.map(vaccineDTO, existingVaccine);
+			Vaccine updatedVaccine = vaccineRepository.save(existingVaccine);
+			VaccineDTO updatedDTO = modelMapper.map(updatedVaccine, VaccineDTO.class);
+			return new ResponseEntity<>(updatedDTO, HttpStatus.OK);
+		}).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@Override
+	public ResponseEntity<Void> deleteVaccine(int id) {
+		if (vaccineRepository.existsById(id)) {
+			vaccineRepository.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+}

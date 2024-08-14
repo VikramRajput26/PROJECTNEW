@@ -1,0 +1,48 @@
+package com.app.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.app.dto.ParentDTO;
+import com.app.services.ParentService;
+
+@RestController
+@RequestMapping("/parents")
+public class ParentController {
+
+    private final ParentService parentService;
+
+    @Autowired
+    public ParentController(ParentService parentService) {
+        this.parentService = parentService;
+    }
+
+    @PostMapping
+    public ResponseEntity<ParentDTO> createParent(@RequestBody ParentDTO parentDTO) {
+        return ResponseEntity.ok(parentService.createParent(parentDTO));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ParentDTO> getParentById(@PathVariable int id) {
+        return parentService.getParentById(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ParentDTO>> getAllParents() {
+        return parentService.getAllParents();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ParentDTO> updateParent(@PathVariable int id, @RequestBody ParentDTO parentDTO) {
+        return parentService.updateParent(id, parentDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteParent(@PathVariable int id) {
+        parentService.deleteParent(id);
+        return ResponseEntity.noContent().build();
+    }
+}

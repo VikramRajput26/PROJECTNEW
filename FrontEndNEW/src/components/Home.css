@@ -122,3 +122,32 @@ html {
   max-width: 100%;
   height: auto;
 }
+
+/* Ensure the container is set up to use Flexbox */
+.cards-wrapper {
+  display: flex;
+  justify-content: space-around; /* Space cards evenly */
+  align-items: stretch; /* Ensure all cards are the same height */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 20px; /* Space between cards */
+  padding: 20px; /* Space around the container */
+}
+
+/* Ensure cards have consistent sizing */
+.cards-wrapper > * {
+  flex: 1;
+  max-width: 300px; /* Adjust to your preferred card width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Add responsive design */
+@media (max-width: 768px) {
+  .cards-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cards-wrapper > * {
+    max-width: 100%;
+  }
+}

@@ -1,31 +1,23 @@
-// Home.jsx
+// Home.js
 import React from "react";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import "./Home.css";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
-import UserList from "../pages/UserList";
-import UserById from "../pages/UserById";
-import UpdateUser from "../pages/UpdateUser";
-import ChildList from "../pages/ChildList";
-import UpdateChild from "../pages/UpdateChild";
-import { logout } from "../services/authService";
-import Footer from "../homepage/Footer"; // Import the Footer component
+import Footer from "../homepage/Footer";
 import Immune from "../homepage/Immune";
 import Cards from "../homepage/Cards";
-
-// Import the Footer component
+import Card2 from "../homepage/Card2";
+import Card3 from "../homepage/Card3";
 
 function Home() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
-    navigate("/");
+    localStorage.removeItem("token");
+    navigate("/sign-in");
   };
 
   return (
@@ -56,14 +48,13 @@ function Home() {
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/user-list">
-                  UserList
+                  User List
                 </NavDropdown.Item>
-
                 <NavDropdown.Item as={Link} to="/child-list">
-                  ChildList
+                  Child List
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/update-child/:id">
-                  UpdateChild
+                <NavDropdown.Item as={Link} to="/appointment-list">
+                  Appointment List
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
@@ -73,19 +64,16 @@ function Home() {
       <div className="full-page-image-container">
         <img src="/baby1.jpg" alt="Happy Baby" className="full-page-image" />
         <div className="form-overlay">
-          <Routes>
-            <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/user-list" element={<UserList />} />
-            <Route path="/user-by-id" element={<UserById />} />
-            <Route path="/child-list" element={<ChildList />} />
-            <Route path="/update-child/:id" element={<UpdateChild />} />
-          </Routes>
+          {/* Content will be rendered here based on routing */}
         </div>
       </div>
       <Immune />
-      <Cards />
-      <Footer /> {/* Add the Footer component here */}
+      <div className="cards-wrapper">
+        <Cards />
+        <Card2 />
+        <Card3 />
+      </div>
+      <Footer />
     </>
   );
 }

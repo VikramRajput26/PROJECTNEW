@@ -1,0 +1,43 @@
+.footer-custom {
+  background-color: #215f9d;
+  padding: 20px 0;
+  text-align: center;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.footer-content h5 {
+  margin-bottom: 10px;
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.footer-content a {
+  color: #f5f6f7;
+  text-decoration: none;
+}
+
+.footer-content a:hover {
+  text-decoration: underline;
+}
+
+iframe {
+  border: 0;
+  border-radius: 10px;
+}
+
+.footer-content .text-center p {
+  margin: 5px 0;
+}
+
+.footer-custom .container {
+  padding-left: 0;
+  padding-right: 0;
+}

@@ -1,0 +1,75 @@
+package com.app.services;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dto.ChildDTO;
+import com.app.entity.Child;
+import com.app.repository.ChildRepository;
+
+@Service
+@Transactional
+public class ChildServiceImpl implements ChildService {
+
+    private final ChildRepository childRepository;
+    private final ModelMapper modelMapper;
+
+    public ChildServiceImpl(ChildRepository childRepository, ModelMapper modelMapper) {
+        this.childRepository = childRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    @Override
+    public ResponseEntity<ChildDTO> createChild(ChildDTO childDTO) {
+        Child child = modelMapper.map(childDTO, Child.class);
+        child = childRepository.save(child);
+        ChildDTO responseDTO = modelMapper.map(child, ChildDTO.class);
+        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<ChildDTO> getChildById(int id) {
+        return childRepository.findById(id)
+                .map(child -> {
+                    ChildDTO responseDTO = modelMapper.map(child, ChildDTO.class);
+                    return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public ResponseEntity<List<ChildDTO>> getAllChildren() {
+        List<ChildDTO> children = childRepository.findAll().stream()
+                .map(child -> modelMapper.map(child, ChildDTO.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(children, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ChildDTO> updateChild(int id, ChildDTO childDTO) {
+        return childRepository.findById(id)
+                .map(existingChild -> {
+                    modelMapper.map(childDTO, existingChild);
+                    Child updatedChild = childRepository.save(existingChild);
+                    ChildDTO responseDTO = modelMapper.map(updatedChild, ChildDTO.class);
+                    return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteChild(int id) {
+        if (childRepository.existsById(id)) {
+            childRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+}

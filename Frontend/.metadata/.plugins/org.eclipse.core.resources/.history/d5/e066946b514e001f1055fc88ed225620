@@ -1,0 +1,50 @@
+package com.app.services;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import com.app.dto.ParentDTO;
+import com.app.entity.Parent;
+import com.app.repository.ParentRepository;
+
+@Service
+public class ParentService {
+
+	private final ParentRepository parentRepository;
+	private final ModelMapper modelMapper;
+
+	public ParentService(ParentRepository parentRepository, ModelMapper modelMapper) {
+		this.parentRepository = parentRepository;
+		this.modelMapper = modelMapper;
+	}
+
+	public ParentDTO createParent(ParentDTO parentDTO) {
+		Parent parent = modelMapper.map(parentDTO, Parent.class);
+		parent = parentRepository.save(parent);
+		return modelMapper.map(parent, ParentDTO.class);
+	}
+
+	public ParentDTO getParentById(int id) {
+		Parent parent = parentRepository.findById(id).orElseThrow();
+		return modelMapper.map(parent, ParentDTO.class);
+	}
+
+	public List<ParentDTO> getAllParents() {
+		return parentRepository.findAll().stream().map(parent -> modelMapper.map(parent, ParentDTO.class))
+				.collect(Collectors.toList());
+	}
+
+	public ParentDTO updateParent(int id, ParentDTO parentDTO) {
+		Parent parent = parentRepository.findById(id).orElseThrow();
+		modelMapper.map(parentDTO, parent);
+		parent = parentRepository.save(parent);
+		return modelMapper.map(parent, ParentDTO.class);
+	}
+
+	public void deleteParent(int id) {
+		parentRepository.deleteById(id);
+	}
+}

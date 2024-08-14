@@ -1,0 +1,18 @@
+package com.app.services;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import com.app.dto.ChildDTO;
+
+public interface ChildService {
+    ResponseEntity<ChildDTO> createChild(ChildDTO childDTO);
+
+    ResponseEntity<ChildDTO> getChildById(int id);
+
+    ResponseEntity<List<ChildDTO>> getAllChildren();
+
+    ResponseEntity<ChildDTO> updateChild(int id, ChildDTO childDTO);
+
+    ResponseEntity<Void> deleteChild(int id);
+}

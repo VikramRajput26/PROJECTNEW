@@ -1,0 +1,28 @@
+/* ViewChild.css */
+.view-child-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  padding: 20px; /* Optional padding */
+  box-sizing: border-box;
+}
+
+.view-child-details {
+  max-width: 600px; /* Optional: adjust based on your layout */
+  width: 100%;
+  background-color: #bed0dc; /* Light background color */
+  padding: 20px; /* Padding inside the container */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.view-child-details h2 {
+  margin-bottom: 20px;
+  font-size: 2rem; /* Increased font size for headings */
+}
+
+.view-child-details p {
+  margin: 10px 0;
+  font-size: 1.25rem; /* Increased font size for paragraphs */
+}

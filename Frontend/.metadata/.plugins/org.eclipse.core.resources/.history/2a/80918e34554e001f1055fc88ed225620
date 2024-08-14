@@ -1,0 +1,17 @@
+package com.app.services;
+
+import java.util.List;
+
+import com.app.dto.VaccineScheduleDTO;
+
+public interface VaccineScheduleService {
+	VaccineScheduleDTO createVaccineSchedule(VaccineScheduleDTO vaccineScheduleDTO);
+
+	VaccineScheduleDTO getVaccineScheduleById(int id);
+
+	List<VaccineScheduleDTO> getAllVaccineSchedules();
+
+	VaccineScheduleDTO updateVaccineSchedule(int id, VaccineScheduleDTO vaccineScheduleDTO);
+
+	void deleteVaccineSchedule(int id);
+}

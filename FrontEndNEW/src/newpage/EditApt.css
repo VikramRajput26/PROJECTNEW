@@ -1,0 +1,66 @@
+/* EditApt.css */
+
+.edit-apt-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  background-color: #ffffff; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.edit-apt-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333333; /* Dark text color for better readability */
+}
+
+.edit-apt-container .error {
+  color: #ff0000; /* Red text for error messages */
+  margin-bottom: 20px;
+}
+
+.edit-apt-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-apt-container .form-group {
+  margin-bottom: 15px;
+}
+
+.edit-apt-container .form-group label {
+  font-weight: bold;
+  color: #555555; /* Slightly lighter color for labels */
+}
+
+.edit-apt-container .form-group input,
+.edit-apt-container .form-group select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #cccccc; /* Light border */
+  border-radius: 4px; /* Rounded corners for inputs */
+  background-color: #f9f9f9; /* Light background for inputs */
+}
+
+.edit-apt-container button {
+  margin-top: 20px;
+  width: 120px;
+  align-self: flex-start;
+  margin-right: 10px;
+  border-radius: 4px; /* Rounded corners for buttons */
+}
+
+.edit-apt-container button:last-child {
+  margin-right: 0;
+}
+
+.edit-apt-container .btn-primary {
+  background-color: #007bff; /* Primary button color */
+  border-color: #007bff;
+}
+
+.edit-apt-container .btn-secondary {
+  background-color: #6c757d; /* Secondary button color */
+  border-color: #6c757d;
+}

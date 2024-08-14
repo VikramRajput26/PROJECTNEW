@@ -1,0 +1,28 @@
+/* UpdateUser.css */
+
+.update-user-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.update-user-container h2 {
+  margin-bottom: 20px;
+}
+
+.update-user-container form {
+  width: 100%;
+  max-width: 600px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.update-user-container .ml-2 {
+  margin-left: 10px;
+}

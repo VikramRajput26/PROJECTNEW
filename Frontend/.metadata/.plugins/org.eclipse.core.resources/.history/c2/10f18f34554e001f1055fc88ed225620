@@ -1,0 +1,38 @@
+package com.app.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.entity.User;
+import com.app.repository.UserRepository;
+
+@Service
+@Transactional
+public class UserServiceImpl implements UserService {
+    
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    public ResponseEntity<User> findByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Void> registerUser(User user) {
+        try {
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+}

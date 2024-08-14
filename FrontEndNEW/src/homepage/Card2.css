@@ -1,0 +1,46 @@
+/* Unified Card Styles */
+.cards-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Ensures cards wrap to the next line if there isn't enough space */
+  gap: 20px; /* Space between cards */
+  padding: 20px;
+}
+
+.doctor-card {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  width: 100%; /* Full width of its container */
+  max-width: 300px; /* Adjust the max-width as needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-image {
+  border-radius: 50%;
+  width: 120px; /* Consistent size across all cards */
+  height: 120px; /* Consistent size across all cards */
+  object-fit: cover;
+  margin-right: 16px;
+}
+
+.doctor-info {
+  max-width: 600px; /* Adjust the max-width as needed */
+}
+
+.go-back-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.go-back-button:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,50 @@
+/* ViewApt.css */
+
+.view-apt-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  background-color: #ffffff; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.view-apt-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333333; /* Dark text color for better readability */
+}
+
+.view-apt-container .error {
+  color: #ff0000; /* Red text for error messages */
+  margin-bottom: 20px;
+}
+
+.view-apt-container p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333333; /* Dark text color for paragraphs */
+}
+
+.view-apt-container strong {
+  display: inline-block;
+  width: 150px; /* Adjust width for consistent alignment */
+  font-weight: bold;
+  color: #555555; /* Slightly lighter color for labels */
+}
+
+.view-apt-container button {
+  margin-top: 20px;
+  border-radius: 4px; /* Rounded corners for buttons */
+}
+
+.view-apt-container .btn-secondary {
+  background-color: #6c757d; /* Secondary button color */
+  border-color: #6c757d;
+  color: #ffffff; /* White text color */
+}
+
+.view-apt-container .btn-secondary:hover {
+  background-color: #5a6268; /* Darker shade on hover */
+  border-color: #545b62;
+}

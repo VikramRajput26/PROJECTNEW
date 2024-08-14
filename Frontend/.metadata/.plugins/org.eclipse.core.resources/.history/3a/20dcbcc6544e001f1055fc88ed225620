@@ -1,0 +1,18 @@
+package com.app.services;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import com.app.dto.ParentDTO;
+
+public interface ParentService {
+    ResponseEntity<ParentDTO> createParent(ParentDTO parentDTO);
+
+    ResponseEntity<ParentDTO> getParentById(int id);
+
+    ResponseEntity<List<ParentDTO>> getAllParents();
+
+    ResponseEntity<ParentDTO> updateParent(int id, ParentDTO parentDTO);
+
+    ResponseEntity<Void> deleteParent(int id);
+}
