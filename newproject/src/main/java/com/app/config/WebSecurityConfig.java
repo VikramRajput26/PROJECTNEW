@@ -48,11 +48,13 @@ public class WebSecurityConfig {
 		http.cors().configurationSource(corsConfigurationSource()) // Apply CORS configuration
 				.and().csrf().disable().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
 				.accessDeniedHandler(accessDeniedHandler).and().authorizeRequests()
-				.antMatchers("/api/v1/auth/sign-in", "/api/v1/auth/sign-up").permitAll().antMatchers("/api/users/**")
-				.permitAll() // Permit all access to UserController endpoints
-				.antMatchers("/api/children/**").permitAll().antMatchers("/api/appointments/**").permitAll()
+				.antMatchers("/api/v1/auth/sign-in", "/api/v1/auth/sign-up").permitAll()
+				.antMatchers("/api/users/**").permitAll() // Permit all access to UserController endpoints
+				.antMatchers("/api/children/**").permitAll()
+				.antMatchers("/api/appointments/**").permitAll()
 				.antMatchers("/vaccines/**").permitAll()// Permit all access to ChildController endpoints
-				.antMatchers("/auth/**", "/swagger*/**", "/v*/api-docs/**").permitAll().antMatchers(HttpMethod.OPTIONS)
+				.antMatchers("/auth/**", "/swagger*/**", "/v*/api-docs/**").permitAll()
+				.antMatchers(HttpMethod.OPTIONS)
 				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

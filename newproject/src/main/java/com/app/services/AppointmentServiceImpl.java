@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dto.AppointmentDTO;
+import com.app.dto.UserDTO;
 import com.app.entity.Appointment;
 import com.app.entity.Child;
+import com.app.entity.Role;
 import com.app.entity.User;
 import com.app.repository.AppointmentRepository;
 import com.app.repository.ChildRepository;
@@ -24,7 +26,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Autowired
 	private ChildRepository childRepository;
-
+	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -117,7 +119,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	// Method to convert DTO status to entity status
-	private com.app.entity.Status convertToEntityStatus(com.app.dto.Status dtoStatus) {
+	private com.app.entity.Status convertToEntityStatus(com.app.entity.Status dtoStatus) {
 		return com.app.entity.Status.valueOf(dtoStatus.name());
 	}
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.AdminDTO;
 import com.app.dto.UserDTO;
 import com.app.services.UserService;
 
@@ -44,7 +45,7 @@ public class UserController {
 		return ResponseEntity.ok(user);
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable int id) {
 		userService.deleteUser(id);
@@ -56,4 +57,11 @@ public class UserController {
 		List<UserDTO> users = userService.getAllUsers();
 		return ResponseEntity.ok(users);
 	}
+
+	@GetMapping("/admins")
+	public ResponseEntity<List<AdminDTO>> getAllAdminUsers() {
+		List<AdminDTO> admins = userService.getAllAdminUsers();
+		return ResponseEntity.ok(admins);
+	}
+
 }

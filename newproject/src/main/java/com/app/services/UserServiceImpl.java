@@ -2,7 +2,6 @@ package com.app.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,22 +9,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.app.dto.RoleDTO;
+import com.app.dto.AdminDTO;
 import com.app.dto.UserDTO;
 import com.app.entity.Role;
 import com.app.entity.User;
-import com.app.repository.RoleRepository;
 import com.app.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private final UserRepository userRepository;
-	@Autowired
-	private final RoleRepository roleRepository;
 	@Autowired
 	private final PasswordEncoder passwordEncoder;
 
@@ -38,13 +35,12 @@ public class UserServiceImpl implements UserService {
 		user.setContactNumber(userDTO.getContactNumber());
 		user.setEmail(userDTO.getEmail());
 		user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-		user.setRoles(convertToRoleEntities(userDTO.getRoles()));
+		user.setRole(userDTO.getRole()); // Directly set the role
 		user = userRepository.save(user);
 		return convertToDTO(user);
 	}
 
 	@Override
-
 	public UserDTO updateUser(int userId, UserDTO userDTO) {
 		Optional<User> optionalUser = userRepository.findById(userId);
 		if (optionalUser.isPresent()) {
@@ -56,7 +52,7 @@ public class UserServiceImpl implements UserService {
 				user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 			}
 			user.setEmail(userDTO.getEmail());
-			user.setRoles(convertToRoleEntities(userDTO.getRoles()));
+			user.setRole(userDTO.getRole()); // Update the role directly
 			user = userRepository.save(user);
 			return convertToDTO(user);
 		}
@@ -84,13 +80,6 @@ public class UserServiceImpl implements UserService {
 		return users.stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
-	private Set<Role> convertToRoleEntities(Set<RoleDTO> roleDTOs) {
-		return roleDTOs.stream()
-				.map(roleDTO -> roleRepository.findByName(roleDTO.getName())
-						.orElseThrow(() -> new RuntimeException("Role not found: " + roleDTO.getName())))
-				.collect(Collectors.toSet());
-	}
-
 	private UserDTO convertToDTO(User user) {
 		UserDTO userDTO = new UserDTO();
 		userDTO.setUserId(user.getUserId());
@@ -98,8 +87,26 @@ public class UserServiceImpl implements UserService {
 		userDTO.setLastName(user.getLastName());
 		userDTO.setContactNumber(user.getContactNumber());
 		userDTO.setEmail(user.getEmail());
-		userDTO.setRoles(user.getRoles().stream().map(role -> new RoleDTO(role.getName())).collect(Collectors.toSet()));
+		userDTO.setRole(user.getRole()); // Set the role directly
 		return userDTO;
+	}
+
+	public List<AdminDTO> getAdminsByRole(String role) {
+		// Convert the role string to the RoleEnum
+		Role roleEnum = Role.valueOf(role.toUpperCase());
+
+		// Fetch users by role and map to AdminDTO
+		return userRepository.findByRole(roleEnum).stream()
+				.map(user -> new AdminDTO(user.getUserId(), user.getFirstName(), user.getLastName()))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<AdminDTO> getAllAdminUsers() {
+		List<User> adminUsers = userRepository.findByRole(Role.ROLE_ADMIN);
+		return adminUsers.stream()
+				.map(user -> new AdminDTO(user.getUserId(), user.getFirstName(), user.getLastName()))
+				.collect(Collectors.toList());
 	}
 
 }

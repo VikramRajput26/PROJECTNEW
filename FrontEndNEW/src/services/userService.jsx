@@ -62,3 +62,12 @@ export const getAllUsers = async () => {
     throw error; // This ensures the error is properly caught in the component
   }
 };
+
+export const getAllAdminUsers = async () => {
+  try {
+    const response = await myAxios.get("/api/users/admins");
+    return response.data;
+  } catch (error) {
+    throw error; // Ensure the error is properly caught in the component
+  }
+};

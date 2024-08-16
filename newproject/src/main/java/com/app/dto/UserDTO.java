@@ -1,21 +1,27 @@
 package com.app.dto;
 
-import java.util.Set;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import com.app.entity.Role;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class UserDTO {
-    private int userId;
+	private int userId;
 	private String firstName;
 	private String lastName;
 	private String contactNumber;
 	private String email;
 	private String password; // Added password field
-	private Set<RoleDTO> roles;
+	@Enumerated(EnumType.STRING)
+	private Role role;
 
 }

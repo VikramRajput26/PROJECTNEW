@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.AdminDTO;
 import com.app.dto.AppointmentDTO;
+import com.app.dto.UserDTO;
 import com.app.services.AppointmentService;
+import com.app.services.UserService;
 
 @RestController
 @RequestMapping("/api/appointments")
@@ -25,11 +28,19 @@ public class AppointmentController {
 
 	@Autowired
 	private AppointmentService appointmentService;
+	
+	@Autowired
+	private UserService userService;
 
 	@PostMapping("/create")
 	public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
-		AppointmentDTO createdAppointment = appointmentService.createAppointment(appointmentDTO);
-		return new ResponseEntity<>(createdAppointment, HttpStatus.CREATED);
+		try {
+			AppointmentDTO createdAppointment = appointmentService.createAppointment(appointmentDTO);
+			return new ResponseEntity<>(createdAppointment, HttpStatus.CREATED);
+		} catch (RuntimeException e) {
+			// Handle specific exceptions related to creation
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PutMapping("/update/{id}")
@@ -42,8 +53,13 @@ public class AppointmentController {
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Void> deleteAppointment(@PathVariable("id") int appointmentId) {
-		appointmentService.deleteAppointment(appointmentId);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		try {
+			appointmentService.deleteAppointment(appointmentId);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			// Handle exceptions related to deletion
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@GetMapping("/getbyid/{id}")
@@ -58,4 +74,11 @@ public class AppointmentController {
 		List<AppointmentDTO> appointments = appointmentService.getAllAppointments();
 		return new ResponseEntity<>(appointments, HttpStatus.OK);
 	}
+
+	@GetMapping("/api/users/role/{role}")
+	public ResponseEntity<List<AdminDTO>> getUsersByRole(@PathVariable String role) {
+	    List<AdminDTO> users = userService.getAdminsByRole(role);
+	    return ResponseEntity.ok(users);
+	}
+
 }

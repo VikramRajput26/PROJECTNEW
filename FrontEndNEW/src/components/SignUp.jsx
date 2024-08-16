@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signUp } from "../services/userService"; // Ensure this is the correct import
+import { signUp } from "../services/userService";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./SignUp.css";
@@ -11,7 +11,7 @@ function SignUp() {
     email: "",
     password: "",
     contactNumber: "",
-    roles: [], // This should be an array to match the backend
+    role: "", // Single role
   });
 
   const handleChange = (e) => {
@@ -20,15 +20,15 @@ function SignUp() {
   };
 
   const handleRoleChange = (e) => {
-    setFormData({ ...formData, roles: [e.target.value] }); // Adjusting for single role selection
+    setFormData({ ...formData, role: e.target.value }); // Single role
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { token, userId } = await signUp(formData); // Capture userId
+      const { token, userId } = await signUp(formData);
       localStorage.setItem("token", token);
-      localStorage.setItem("userId", userId); // Store userId
+      localStorage.setItem("userId", userId);
       toast.success("User registered successfully!");
     } catch (error) {
       toast.error(
@@ -99,14 +99,14 @@ function SignUp() {
           <div className="form-group">
             <label>Role:</label>
             <select
-              name="roles"
-              value={formData.roles[0] || ""}
+              name="role"
+              value={formData.role}
               onChange={handleRoleChange}
               required
             >
               <option value="">Select a role</option>
               <option value="ROLE_ADMIN">ROLE_ADMIN</option>
-              <option value="ROLE_USER">ROLE_USER</option>
+              <option value="ROLE_USER">ROLE_USER</option>             
             </select>
           </div>
         </div>

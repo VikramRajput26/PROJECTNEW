@@ -2,6 +2,7 @@ package com.app.services;
 
 import java.util.List;
 
+import com.app.dto.AdminDTO;
 import com.app.dto.UserDTO;
 
 public interface UserService {
@@ -14,4 +15,9 @@ public interface UserService {
 	void deleteUser(int userId);
 
 	List<UserDTO> getAllUsers();
+	
+	public List<AdminDTO> getAdminsByRole(String role);
+	
+	List<AdminDTO> getAllAdminUsers(); //get all ROLE_ADMIN users
+
 }
