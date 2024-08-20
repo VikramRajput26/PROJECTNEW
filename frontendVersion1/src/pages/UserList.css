@@ -1,0 +1,30 @@
+/* UserList.css */
+.table-container {
+  display: flex;
+  flex-direction: column; /* Align items in a column */
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust height as needed */
+  position: relative;
+}
+
+.user-table {
+  width: 100%; /* Make the table fill the container */
+  max-width: 1200px; /* Optional: Set a maximum width */
+}
+
+.action-button {
+  margin-right: 10px; /* Spacing between buttons */
+}
+
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+@media (max-width: 768px) {
+  .user-table {
+    width: 100%; /* Make the table responsive on smaller screens */
+  }
+}

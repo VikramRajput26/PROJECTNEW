@@ -1,0 +1,17 @@
+package com.app.services;
+
+import java.util.List;
+
+import com.app.dto.ParentDTO;
+
+public interface ParentService {
+	ParentDTO createParent(ParentDTO parentDTO);
+
+	ParentDTO getParentById(int id);
+
+	List<ParentDTO> getAllParents();
+
+	ParentDTO updateParent(int id, ParentDTO parentDTO);
+
+	void deleteParent(int id);
+}

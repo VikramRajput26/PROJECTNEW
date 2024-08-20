@@ -1,0 +1,16 @@
+package com.app.services;
+
+import java.util.List;
+import com.app.dto.DoctorDTO;
+
+public interface DoctorService {
+    DoctorDTO createDoctor(DoctorDTO doctorDTO);
+
+    DoctorDTO getDoctorById(int id);
+
+    List<DoctorDTO> getAllDoctors();
+
+    DoctorDTO updateDoctor(int id, DoctorDTO doctorDTO);
+
+    void deleteDoctor(int id);
+}

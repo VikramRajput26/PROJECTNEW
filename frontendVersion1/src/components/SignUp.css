@@ -1,0 +1,59 @@
+.signup-container {
+  max-width: 800px; /* Increase the max-width for a larger box */
+  width: 100%; /* Ensure it uses the full width of the parent container */
+  height: auto; /* Automatically adjust the height based on content */
+  margin: 0 auto;
+  padding: 40px; /* Increase padding for a more spacious form */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #e2e6f0;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-row {
+  display: flex;
+  gap: 20px; /* Increase gap for better spacing */
+  margin-bottom: 20px; /* Ensure space between rows */
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px; /* Increase padding for larger input fields */
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px; /* Increase font size */
+}
+
+button {
+  padding: 15px 20px; /* Increase padding for larger button */
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  font-size: 18px; /* Increase font size */
+  cursor: pointer;
+  margin-top: 20px; /* Add margin top to separate button from fields */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.alert {
+  margin-bottom: 20px;
+  font-size: 16px; /* Ensure alert font size matches */
+}
